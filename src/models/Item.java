@@ -3,19 +3,18 @@ package models;
 // Generated Apr 11, 2016 2:03:20 PM by Hibernate Tools 4.3.1.Final
 
 import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 /**
@@ -32,13 +31,12 @@ public class Item {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_carro", nullable = false)
-	@JsonManagedReference
-	public Carro carro;
+	private Carro carro;
 	
 	@ManyToOne
 	@JoinColumn(name="pedido")
-	@JsonManagedReference
-	public Pedido pedido;
+	@JsonBackReference
+	private Pedido pedido;
 	
 	@Column(name = "valor", nullable = false, precision = 20, scale = 5)
 	private BigDecimal valor;

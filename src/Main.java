@@ -179,16 +179,14 @@ public class Main {
 		List<Pedido> p = qped.getResultList();
 		
 		try {
-			String result = new ObjectMapper().writeValueAsString(p);
-			System.out.println(result);
-			//mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/atendentes.json"), la);
-			//xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/atendentes.xml"), la);
-			//mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/categorias.json"), ca);
-			//xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/categorias.xml"), ca);
-			//mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/carros.json"), car);
-			//xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/carros.xml"), car);
-			//mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/pedidos.json"), p);
-			//xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/pedidos.xml"), p);
+			mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/atendentes.json"), la);
+			xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/atendentes.xml"), la);
+			mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/categorias.json"), ca);
+			xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/categorias.xml"), ca);
+			mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/carros.json"), car);
+			xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/carros.xml"), car);
+			mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/pedidos.json"), p);
+			xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/pedidos.xml"), p);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
