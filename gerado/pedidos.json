@@ -1,0 +1,1 @@
+{"idPedido":1,"atendente":{"idAtendente":1,"nome":"Atendente 0","login":"atendente_0","senha":123,"pedidos":[]},"cliente":{"idCliente":1,"nome":"Cliente 0","cpf":"123.456.789-10","dtNascimento":-2153854412000,"pedidos":[]},"dataEntrega":1478224800000,"dataLocacao":1475550000000,"total":2000,"items":[]}
