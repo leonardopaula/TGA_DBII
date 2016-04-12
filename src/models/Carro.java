@@ -28,7 +28,7 @@ public class Carro implements java.io.Serializable {
 	private String marca;
 	private String modelo;
 	private String cor;
-	private Set<Item> items = new HashSet<Item>(0);
+	//private Set<Item> items = new HashSet<Item>(0);
 
 	public Carro() {
 	}
@@ -48,7 +48,7 @@ public class Carro implements java.io.Serializable {
 		this.marca = marca;
 		this.modelo = modelo;
 		this.cor = cor;
-		this.items = items;
+		//this.items = items;
 	}
 
 	@Id
@@ -63,7 +63,7 @@ public class Carro implements java.io.Serializable {
 		this.idCarro = idCarro;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_categoria", nullable = false)
 	public Categoria getCategoria() {
 		return this.categoria;
@@ -100,13 +100,13 @@ public class Carro implements java.io.Serializable {
 		this.cor = cor;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "carro")
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "carro")
 	public Set<Item> getItems() {
 		return this.items;
 	}
 
 	public void setItems(Set<Item> items) {
 		this.items = items;
-	}
+	}*/
 
 }

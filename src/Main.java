@@ -4,20 +4,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.CriteriaSpecification;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -116,31 +107,60 @@ public class Main {
 		em.getTransaction().commit();
 		System.out.println("OK carros...");
 
-		Pedido pedido = new Pedido();
-		pedido.setAtendente(la.get(0));
-		pedido.setCliente(cli.get(0));
-		pedido.setDataEntrega(new Date("11/04/2016"));
-		pedido.setDataLocacao(new Date("10/04/2016"));
-		pedido.setTotal(new BigDecimal(2000));
-		
 		System.out.println("Preparando pedidos...");
-		Item item = new Item();
-		item.setCarro(car.get(0));
-		item.setDesconto(new BigDecimal(0));
-		item.setValor(new BigDecimal(2000));
-		item.setPedido(pedido);
+		
+		Pedido p1 = new Pedido();
+		p1.setAtendente(la.get(0));
+		p1.setCliente(cli.get(0));
+		p1.setDataEntrega(new Date("11/04/2016"));
+		p1.setDataLocacao(new Date("10/04/2016"));
+		p1.setTotal(new BigDecimal(2000));
+		
+		Pedido p2 = new Pedido();
+		p2.setAtendente(la.get(2));
+		p2.setCliente(cli.get(2));
+		p2.setDataEntrega(new Date("20/01/2000"));
+		p2.setDataLocacao(new Date("22/01/2000"));
+		p2.setTotal(new BigDecimal(5000));
+		
+		// List de ítens
+		List<Item> items_pedido1 = new ArrayList<Item>();
+		Item item1 = new Item();
+		item1.setCarro(car.get(0));
+		item1.setDesconto(new BigDecimal(0));
+		item1.setValor(new BigDecimal(2000));
+		item1.setPedido(p1);
 		
 		Item item2 = new Item();
 		item2.setCarro(car.get(1));
 		item2.setDesconto(new BigDecimal(1000));
 		item2.setValor(new BigDecimal(3000));
-		item2.setPedido(pedido);
+		item2.setPedido(p1);
+
+		items_pedido1.add(item1);
+		items_pedido1.add(item2);
+		p1.setItems(items_pedido1); // Adiciona items no pedido
 		
+		List<Item> items_pedido2 = new ArrayList<Item>();
+		Item item3 = new Item();
+		item3.setCarro(car.get(3));
+		item3.setDesconto(new BigDecimal(5000));
+		item3.setValor(new BigDecimal(10000));
+		item3.setPedido(p2);
+
+		items_pedido2.add(item3);
+		p2.setItems(items_pedido2);
+
 		em.getTransaction().begin();
-			em.persist(pedido);
-			em.persist(item);
+			em.persist(item1);
 			em.persist(item2);
+			em.persist(p1);
+
+			em.persist(item3);
+			em.persist(p2);
 		em.getTransaction().commit();
+		em.clear();
+
 		System.out.println("Ok pedidos...");
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -156,30 +176,26 @@ public class Main {
 		ca = qcat.getResultList();
 		
 		TypedQuery<Pedido> qped = em.createQuery("from Pedido p", Pedido.class);
-		//List<Pedido> p = qped.getResultList();
+		List<Pedido> p = qped.getResultList();
 		
-		Pedido p = qped.getSingleResult();//em.find(Pedido.class, 1);
-
-		Set<Item> its = p.getItems();
-		for(int i = 0; i < its.size(); i++)
-		{
-			System.out.println("=> " + its.toString());
-		}
-
 		try {
-			mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/atendentes.json"), la);
-			xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/atendentes.xml"), la);
-			mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/categorias.json"), ca);
-			xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/categorias.xml"), ca);
-			mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/carros.json"), car);
-			xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/carros.xml"), car);
-			mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/pedidos.json"), p);
-			xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/pedidos.xml"), p);
+			String result = new ObjectMapper().writeValueAsString(p);
+			System.out.println(result);
+			//mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/atendentes.json"), la);
+			//xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/atendentes.xml"), la);
+			//mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/categorias.json"), ca);
+			//xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/categorias.xml"), ca);
+			//mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/carros.json"), car);
+			//xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/carros.xml"), car);
+			//mapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/pedidos.json"), p);
+			//xmlmapper.writeValue(new File("/home/leonardo/workspace/TGA_BDII/gerado/pedidos.xml"), p);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		em.close();
 
+		System.exit(0);
 	}
 
 }

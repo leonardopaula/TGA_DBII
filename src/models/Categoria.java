@@ -20,12 +20,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "categoria", schema = "public")
-public class Categoria implements java.io.Serializable {
+public class Categoria {
 
 	private int idCategoria;
 	private String descricao;
 	private BigDecimal valor;
-	private Set<Carro> carros = new HashSet<Carro>(0);
+	//private Set<Carro> carros = new HashSet<Carro>(0);
 
 	public Categoria() {
 	}
@@ -40,7 +40,7 @@ public class Categoria implements java.io.Serializable {
 		this.idCategoria = idCategoria;
 		this.descricao = descricao;
 		this.valor = valor;
-		this.carros = carros;
+		//this.carros = carros;
 	}
 
 	@Id
@@ -73,13 +73,13 @@ public class Categoria implements java.io.Serializable {
 		this.valor = valor;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
 	public Set<Carro> getCarros() {
 		return this.carros;
 	}
 
 	public void setCarros(Set<Carro> carros) {
 		this.carros = carros;
-	}
+	}*/
 
 }

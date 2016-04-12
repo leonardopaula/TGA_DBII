@@ -29,7 +29,7 @@ public class Atendente implements java.io.Serializable {
 	private String nome;
 	private String login;
 	private int senha;
-	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
+	//private Set<Pedido> pedidos = new HashSet<Pedido>(0);
 
 	public Atendente() {
 	}
@@ -46,7 +46,7 @@ public class Atendente implements java.io.Serializable {
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
-		this.pedidos = pedidos;
+		//this.pedidos = pedidos;
 	}
 
 	@Id
@@ -88,13 +88,13 @@ public class Atendente implements java.io.Serializable {
 		this.senha = senha;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendente")
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendente")
 	public Set<Pedido> getPedidos() {
 		return this.pedidos;
 	}
 
 	public void setPedidos(Set<Pedido> pedidos) {
 		this.pedidos = pedidos;
-	}
+	}*/
 
 }
