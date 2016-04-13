@@ -19,14 +19,14 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("locadora");
+		EntityManager em = emf.createEntityManager();
+
 		String[] categorias = {"Sedan", "Passeio", "Luxo", "Executivo", "Corrida"};
 		String[] marcas     = {"GM", "Volkswagem", "Fiat", "GM", "Volkswagem"};
 		String[] cores      = {"GM", "Volkswagem", "Fiat", "GM", "Volkswagem"};
 		String[] modelos    = {"Corsa", "Gol", "Palio", "Celta", "Fusca"};
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("locadora");
-		EntityManager em = emf.createEntityManager();
-		
+	
 		System.out.println("Preparando atendentes...");
 		List<Atendente> la = new ArrayList<Atendente>();
 		Atendente atendente;
@@ -108,7 +108,6 @@ public class Main {
 		System.out.println("OK carros...");
 
 		System.out.println("Preparando pedidos...");
-		
 		Pedido p1 = new Pedido();
 		p1.setAtendente(la.get(0));
 		p1.setCliente(cli.get(0));

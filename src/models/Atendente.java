@@ -25,10 +25,22 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @Table(name = "atendente", schema = "public")
 public class Atendente implements java.io.Serializable {
 
+	@Id
+	@SequenceGenerator(name="seq_atendente", sequenceName="seq_atendente_seq"
+					  , allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_atendente")
+	@Column(name = "id_atendente", unique = true, nullable = false)
 	private int idAtendente;
+	
+	@Column(name = "nome", nullable = false, length = 100)
 	private String nome;
+	
+	@Column(name = "login", nullable = false, length = 50)
 	private String login;
+	
+	@Column(name = "senha", nullable = false)
 	private int senha;
+
 	//private Set<Pedido> pedidos = new HashSet<Pedido>(0);
 
 	public Atendente() {
@@ -49,10 +61,6 @@ public class Atendente implements java.io.Serializable {
 		//this.pedidos = pedidos;
 	}
 
-	@Id
-	@SequenceGenerator(name="seq_atendente", sequenceName="seq_atendente_seq", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_atendente")
-	@Column(name = "id_atendente", unique = true, nullable = false)
 	public int getIdAtendente() {
 		return this.idAtendente;
 	}
@@ -61,7 +69,6 @@ public class Atendente implements java.io.Serializable {
 		this.idAtendente = idAtendente;
 	}
 
-	@Column(name = "nome", nullable = false, length = 100)
 	public String getNome() {
 		return this.nome;
 	}
@@ -70,7 +77,6 @@ public class Atendente implements java.io.Serializable {
 		this.nome = nome;
 	}
 
-	@Column(name = "login", nullable = false, length = 50)
 	public String getLogin() {
 		return this.login;
 	}
@@ -79,7 +85,6 @@ public class Atendente implements java.io.Serializable {
 		this.login = login;
 	}
 
-	@Column(name = "senha", nullable = false)
 	public int getSenha() {
 		return this.senha;
 	}

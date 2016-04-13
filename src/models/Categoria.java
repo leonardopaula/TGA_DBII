@@ -22,9 +22,19 @@ import javax.persistence.Table;
 @Table(name = "categoria", schema = "public")
 public class Categoria {
 
+	@Id
+	@SequenceGenerator(name="seq_categoria", sequenceName="seq_categoria_seq"
+					  , allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_categoria")
+	@Column(name = "id_categoria", unique = true, nullable = false)
 	private int idCategoria;
+	
+	@Column(name = "descricao", nullable = false, length = 50)
 	private String descricao;
+	
+	@Column(name = "valor", nullable = false, precision = 20, scale = 5)
 	private BigDecimal valor;
+
 	//private Set<Carro> carros = new HashSet<Carro>(0);
 
 	public Categoria() {
@@ -43,10 +53,6 @@ public class Categoria {
 		//this.carros = carros;
 	}
 
-	@Id
-	@SequenceGenerator(name="seq_categoria", sequenceName="seq_categoria_seq", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_categoria")
-	@Column(name = "id_categoria", unique = true, nullable = false)
 	public int getIdCategoria() {
 		return this.idCategoria;
 	}
@@ -55,7 +61,6 @@ public class Categoria {
 		this.idCategoria = idCategoria;
 	}
 
-	@Column(name = "descricao", nullable = false, length = 50)
 	public String getDescricao() {
 		return this.descricao;
 	}
@@ -64,7 +69,6 @@ public class Categoria {
 		this.descricao = descricao;
 	}
 
-	@Column(name = "valor", nullable = false, precision = 20, scale = 5)
 	public BigDecimal getValor() {
 		return this.valor;
 	}

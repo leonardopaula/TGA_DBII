@@ -27,12 +27,25 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "cliente", schema = "public")
 public class Cliente implements java.io.Serializable {
 
+	@Id
+	@SequenceGenerator(name="seq_cliente", sequenceName="seq_cliente_seq"
+					  , allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_cliente")
+	@Column(name = "id_cliente", unique = true, nullable = false)
 	private int idCliente;
+	
+	@Column(name = "nome", nullable = false, length = 100)
 	private String nome;
+	
+	@Column(name = "cpf", nullable = false, length = 14)
 	private String cpf;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dt_nascimento", nullable = true, length = 13)
 	private Date dtNascimento;
 	
 	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
 	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
 
 	public Cliente() {
@@ -53,10 +66,7 @@ public class Cliente implements java.io.Serializable {
 		this.pedidos = pedidos;
 	}
 
-	@Id
-	@SequenceGenerator(name="seq_cliente", sequenceName="seq_cliente_seq", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_cliente")
-	@Column(name = "id_cliente", unique = true, nullable = false)
+	
 	public int getIdCliente() {
 		return this.idCliente;
 	}
@@ -65,7 +75,6 @@ public class Cliente implements java.io.Serializable {
 		this.idCliente = idCliente;
 	}
 
-	@Column(name = "nome", nullable = false, length = 100)
 	public String getNome() {
 		return this.nome;
 	}
@@ -74,7 +83,6 @@ public class Cliente implements java.io.Serializable {
 		this.nome = nome;
 	}
 
-	@Column(name = "cpf", nullable = false, length = 14)
 	public String getCpf() {
 		return this.cpf;
 	}
@@ -83,8 +91,6 @@ public class Cliente implements java.io.Serializable {
 		this.cpf = cpf;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "dt_nascimento", nullable = false, length = 13)
 	public Date getDtNascimento() {
 		return this.dtNascimento;
 	}
@@ -93,7 +99,6 @@ public class Cliente implements java.io.Serializable {
 		this.dtNascimento = dtNascimento;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
 	public Set<Pedido> getPedidos() {
 		return this.pedidos;
 	}

@@ -23,10 +23,24 @@ import javax.persistence.Table;
 @Table(name = "carro", schema = "public")
 public class Carro implements java.io.Serializable {
 
+	@Id
+	@SequenceGenerator(name="seq_carro", sequenceName="seq_carro_seq"
+	                   , allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_carro")
+	@Column(name = "id_carro", unique = true, nullable = false)
 	private int idCarro;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_categoria", nullable = false)
 	private Categoria categoria;
+	
+	@Column(name = "marca", nullable = false, length = 50)
 	private String marca;
+	
+	@Column(name = "modelo", nullable = false, length = 50)
 	private String modelo;
+	
+	@Column(name = "cor", nullable = false, length = 20)
 	private String cor;
 	//private Set<Item> items = new HashSet<Item>(0);
 
@@ -51,10 +65,6 @@ public class Carro implements java.io.Serializable {
 		//this.items = items;
 	}
 
-	@Id
-	@SequenceGenerator(name="seq_carro", sequenceName="seq_carro_seq", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_carro")
-	@Column(name = "id_carro", unique = true, nullable = false)
 	public int getIdCarro() {
 		return this.idCarro;
 	}
@@ -63,8 +73,6 @@ public class Carro implements java.io.Serializable {
 		this.idCarro = idCarro;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_categoria", nullable = false)
 	public Categoria getCategoria() {
 		return this.categoria;
 	}
@@ -73,7 +81,6 @@ public class Carro implements java.io.Serializable {
 		this.categoria = categoria;
 	}
 
-	@Column(name = "marca", nullable = false, length = 50)
 	public String getMarca() {
 		return this.marca;
 	}
@@ -82,7 +89,6 @@ public class Carro implements java.io.Serializable {
 		this.marca = marca;
 	}
 
-	@Column(name = "modelo", nullable = false, length = 50)
 	public String getModelo() {
 		return this.modelo;
 	}
@@ -91,7 +97,6 @@ public class Carro implements java.io.Serializable {
 		this.modelo = modelo;
 	}
 
-	@Column(name = "cor", nullable = false, length = 20)
 	public String getCor() {
 		return this.cor;
 	}
